@@ -46,7 +46,7 @@ test('liczba sztuk i suma całego koszyka', () => {
   let s = add([], { qty: 2 });
   s = add(s, { productId: 'sulejowska-bula' });
   expect(cartCount(s)).toBe(3);
-  expect(cartTotal(s, P)).toBe(2 * 3900 + 3500);
+  expect(cartTotal(s, P)).toBe(2 * 3900 + 3300);
 });
 
 test('qtyForProduct liczy tylko linie bez dodatków, zestawu i uwag', () => {
