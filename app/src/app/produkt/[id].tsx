@@ -45,13 +45,6 @@ export default function ProductScreen() {
             <Txt w="extrabold" size={24} color={colors.brand}>{formatPLN(product.price)}</Txt>
           </View>
           <Txt size={14} color={colors.muted} style={{ lineHeight: 20 }}>{product.description}</Txt>
-          {product.ingredients.length > 0 && (
-            <View style={styles.chips}>
-              {product.ingredients.map((i) => (
-                <View key={i} style={styles.chip}><Txt w="semibold" size={13} color="#44403C">{i}</Txt></View>
-              ))}
-            </View>
-          )}
           {product.addons.length > 0 && (
             <View>
               <Txt w="extrabold" size={16} style={{ marginBottom: 4 }}>Dodatki</Txt>
@@ -104,8 +97,6 @@ const styles = StyleSheet.create({
   topBtns: { position: 'absolute', left: 20 },
   body: { paddingHorizontal: 20, gap: 14 },
   titleRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 12 },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  chip: { height: 32, paddingHorizontal: 12, borderRadius: 16, backgroundColor: colors.card, justifyContent: 'center' },
   addon: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 50 },
   line: { borderBottomWidth: 1, borderBottomColor: colors.line },
   box: { width: 24, height: 24, borderRadius: 7, borderWidth: 2, borderColor: '#D6CFC8', alignItems: 'center', justifyContent: 'center' },
