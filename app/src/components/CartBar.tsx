@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { Animated, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Line, Path, Polygon } from 'react-native-svg';
 import { useCart } from '../cart/CartContext';
@@ -13,6 +13,15 @@ import { TAB_BAR_HEIGHT } from './TabBar';
 import { Txt } from './Txt';
 
 const TEETH_H = 8;
+
+/** Przecinek w Plus Jakarta ma szeroki lewy margines – dosuwamy go do cyfry przed nim („0,5” zamiast „0 ,5”). */
+function tightComma(text: string) {
+  return text.split(/(\d,)/).map((part, i) =>
+    /^\d,$/.test(part)
+      ? <Text key={i}><Text style={{ letterSpacing: -1.8 }}>{part[0]}</Text>,</Text>
+      : part,
+  );
+}
 const MAX_ICONS = 5;
 
 function StampIcons({ stamps }: { stamps: number }) {
@@ -64,7 +73,7 @@ export function CartBar() {
         <View style={styles.receipt}>
           <View style={styles.stampRow}>
             <StampIcons stamps={stamps} />
-            <Txt w="bold" size={12.5} color={stamps > 0 ? colors.navActive : '#A8A29E'}>{stampText}</Txt>
+            <Txt w="bold" size={12.5} color={stamps > 0 ? colors.navActive : '#A8A29E'}>{tightComma(stampText)}</Txt>
           </View>
           <Svg width="100%" height={1} style={styles.dash}>
             <Line x1={0} y1={0.5} x2="100%" y2={0.5} stroke="#44403C" strokeWidth={1} strokeDasharray="4 3" />
