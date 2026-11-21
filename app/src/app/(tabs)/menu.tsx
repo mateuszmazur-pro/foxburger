@@ -1,5 +1,4 @@
 import { BlurTargetView, BlurView } from 'expo-blur';
-import { router } from 'expo-router';
 import { ComponentRef, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,7 +7,6 @@ import { CART_BAR_SPACE, CartBar } from '../../components/CartBar';
 import { Icon } from '../../components/Icon';
 import { LocationPicker } from '../../components/LocationPicker';
 import { MenuCard } from '../../components/MenuCard';
-import { RoundIconButton } from '../../components/RoundIconButton';
 import { useTabBarSpace } from '../../components/TabBar';
 import { Txt } from '../../components/Txt';
 import { useCart } from '../../cart/CartContext';
@@ -54,7 +52,6 @@ export default function MenuScreen() {
               <Icon name="chevronDown" size={14} strokeWidth={2.4} />
             </View>
           </Pressable>
-          <RoundIconButton icon="bag" label="Koszyk" onPress={() => router.push('/koszyk')} />
         </View>
         <View style={styles.tabs} accessibilityRole="tablist">
           {tenant.categories.map((c) => {
@@ -88,7 +85,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   header: { position: 'absolute', top: 0, left: 0, right: 0, paddingHorizontal: 20, overflow: 'hidden' },
   frost: { backgroundColor: 'rgba(248, 243, 240, 0.72)' },
-  head: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 },
+  head: { flexDirection: 'row', alignItems: 'center', minHeight: 44, marginBottom: 2 },
   locRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   tabs: { flexDirection: 'row', gap: 22, borderBottomWidth: 1, borderBottomColor: '#E7DDD5' },
   tab: { paddingVertical: 10, minHeight: 44, justifyContent: 'center', borderBottomWidth: 2, borderBottomColor: 'transparent', marginBottom: -1 },
