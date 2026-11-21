@@ -12,3 +12,9 @@ export function pickupSlots(now: Date, closesAtHour: number): string[] {
   }
   return out;
 }
+
+/** Ostateczny sposób odbioru przy zamówieniu: godzina zawsze z aktualnych terminów, bez terminów — „jak najszybciej”. */
+export function effectivePickup(mode: 'asap' | 'time', time: string | undefined, slots: string[]): { mode: 'asap' | 'time'; time: string | undefined } {
+  if (mode === 'asap' || slots.length === 0) return { mode: 'asap', time: undefined };
+  return { mode: 'time', time: time && slots.includes(time) ? time : slots[0] };
+}

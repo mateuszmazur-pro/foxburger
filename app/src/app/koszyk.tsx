@@ -12,8 +12,9 @@ import { QtyStepper } from '../components/QtyStepper';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { Txt } from '../components/Txt';
 import { formatPLN } from '../format';
+import { useNow } from '../hooks';
 import { useOrders } from '../orders/OrdersContext';
-import { pickupSlots } from '../orders/pickup';
+import { effectivePickup, pickupSlots } from '../orders/pickup';
 import { useLocation } from '../state/LocationContext';
 import { tenant } from '../tenant';
 import { colors } from '../theme';
@@ -30,7 +31,8 @@ export default function CartScreen() {
   const { location } = useLocation();
   const { place } = useOrders();
   const [mode, setMode] = useState<'asap' | 'time'>('asap');
-  const slots = useMemo(() => pickupSlots(new Date(), location.closesAt), [location.closesAt]);
+  const now = useNow(30000);
+  const slots = useMemo(() => pickupSlots(new Date(now), location.closesAt), [location.closesAt, now]);
   const [time, setTime] = useState<string | undefined>();
   const [payment, setPayment] = useState(PAYMENTS[0].id);
   const [picking, setPicking] = useState(false);
@@ -39,14 +41,15 @@ export default function CartScreen() {
     return (
       <View style={styles.screen}>
         <ScreenHeader title="Twoje zamówienie" />
-        <EmptyState title="Twój koszyk jest pusty" text="Dodaj coś pysznego z menu." action="Przejdź do menu" onAction={() => router.navigate('/menu')} />
+        <EmptyState title="Twój koszyk jest pusty" text="Dodaj coś pysznego z menu." action="Przejdź do menu" onAction={() => router.dismissTo('/menu')} />
       </View>
     );
   }
 
-  const chosenTime = mode === 'time' ? time ?? slots[0] : undefined;
+  const pickup = effectivePickup(mode, time, slots);
+  const chosenTime = pickup.time;
   const submit = () => {
-    const id = place({ lines, total, pickup: { locationId: location.id, mode, time: chosenTime }, payment });
+    const id = place({ lines, total, pickup: { locationId: location.id, mode: pickup.mode, time: pickup.time }, payment });
     router.replace(`/zamowienie/${id}`);
     clear();
   };
@@ -65,10 +68,10 @@ export default function CartScreen() {
             <Txt w="bold" size={13} color={colors.brand}>zmień</Txt>
           </Pressable>
           <View style={styles.grid2}>
-            <Choice on={mode === 'asap'} title="Jak najszybciej" sub="ok. 20 min" onPress={() => setMode('asap')} />
-            <Choice on={mode === 'time'} title="Na godzinę" sub={slots.length ? chosenTime ?? 'wybierz' : 'brak terminów'} disabled={slots.length === 0} onPress={() => setMode('time')} />
+            <Choice on={pickup.mode === 'asap'} title="Jak najszybciej" sub="ok. 20 min" onPress={() => setMode('asap')} />
+            <Choice on={pickup.mode === 'time'} title="Na godzinę" sub={slots.length ? chosenTime ?? 'wybierz' : 'brak terminów'} disabled={slots.length === 0} onPress={() => setMode('time')} />
           </View>
-          {mode === 'time' && slots.length > 0 && (
+          {pickup.mode === 'time' && (
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
               {slots.map((s) => {
                 const on = s === chosenTime;
@@ -105,7 +108,7 @@ export default function CartScreen() {
               </View>
             );
           })}
-          <Pressable accessibilityRole="link" onPress={() => router.navigate('/menu')} style={styles.more}>
+          <Pressable accessibilityRole="link" onPress={() => router.dismissTo('/menu')} style={styles.more}>
             <Icon name="plus" size={16} color={colors.brand} strokeWidth={2.6} />
             <Txt w="bold" size={14} color={colors.brand}>Dodaj coś jeszcze</Txt>
           </Pressable>

@@ -15,3 +15,18 @@ test('ostatni termin kwadrans przed zamknięciem', () => {
 test('tuż przed zamknięciem nie ma terminów', () => {
   expect(pickupSlots(at(20, 31), 21)).toEqual([]);
 });
+
+import { effectivePickup } from '../orders/pickup';
+
+test('wybrana godzina spoza dostępnych terminów przechodzi na pierwszy termin', () => {
+  expect(effectivePickup('time', '20:30', ['19:15', '19:30'])).toEqual({ mode: 'time', time: '19:15' });
+});
+
+test('brak terminów wymusza „jak najszybciej”', () => {
+  expect(effectivePickup('time', '20:30', [])).toEqual({ mode: 'asap', time: undefined });
+});
+
+test('poprawna godzina zostaje', () => {
+  expect(effectivePickup('time', '19:30', ['19:15', '19:30'])).toEqual({ mode: 'time', time: '19:30' });
+  expect(effectivePickup('asap', '19:30', ['19:15'])).toEqual({ mode: 'asap', time: undefined });
+});

@@ -25,7 +25,7 @@ export default function ProductScreen() {
   const [qty, setQty] = useState(1);
 
   if (!product) {
-    return <EmptyState title="Nie znaleziono produktu" text="Ta pozycja nie jest już dostępna w menu." action="Wróć do menu" onAction={() => router.navigate('/menu')} />;
+    return <EmptyState title="Nie znaleziono produktu" text="Ta pozycja nie jest już dostępna w menu." action="Wróć do menu" onAction={() => router.dismissTo('/menu')} />;
   }
   const toggle = (aid: string) => setAddonIds((s) => (s.includes(aid) ? s.filter((x) => x !== aid) : [...s, aid]));
   const sum = unitPrice({ productId: product.id, addonIds, asSet }, tenant.products) * qty;

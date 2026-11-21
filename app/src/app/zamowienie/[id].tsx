@@ -19,7 +19,7 @@ export default function OrderScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const order = useOrders().get(id);
   const now = useNow();
-  const close = () => router.navigate('/');
+  const close = () => router.dismissTo('/');
   if (!order) return <EmptyState title="Nie znaleziono zamówienia" text="To zamówienie nie jest już dostępne." action="Wróć na start" onAction={close} />;
 
   const status = statusAt(order.createdMs, now);
