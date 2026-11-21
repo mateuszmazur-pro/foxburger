@@ -4,6 +4,8 @@ Aplikacja do zamawiania z odbiorem osobistym i program lojalnościowy Fox Club. 
 
 ## Uruchomienie (Expo Go)
 
+Na Windowsie najprościej: dwuklik w **`Uruchom.bat`** (pobiera zmiany, w razie potrzeby instaluje biblioteki, co 15 s dociąga nowe zmiany w tle i startuje Expo). Ręcznie:
+
 Wymagany Node.js 22+.
 
 ```bash
