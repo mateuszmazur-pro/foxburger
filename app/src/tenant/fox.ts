@@ -1,5 +1,6 @@
 import type { Addon, Tenant } from './types';
 import { foxLogoSvg } from './fox-logo';
+import { foxLoaderSvg } from './fox-loader';
 
 const burgerImg = require('../../assets/images/burger.jpg');
 
@@ -38,6 +39,7 @@ export const fox: Tenant = {
     stampOn: '#E0302A',
   },
   logoSvg: foxLogoSvg,
+  introSvg: foxLoaderSvg,
   locations: [
     { id: 'pabianice', name: 'Pabianice', address: 'Popławska 4/20, Pabianice', phone: '+48503563292', closesAt: 21 },
     { id: 'opoczno', name: 'Opoczno', address: 'ul. Gen. Kazimierza Bończy-Załęskiego 29A, Opoczno', closesAt: 21 },

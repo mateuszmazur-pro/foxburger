@@ -58,6 +58,8 @@ export type Tenant = {
   name: string;
   colors: Colors;
   logoSvg: string;
+  /** Animowane intro przy starcie aplikacji (SVG z animacjami CSS). */
+  introSvg?: string;
   locations: Location[];
   categories: Category[];
   products: Product[];
