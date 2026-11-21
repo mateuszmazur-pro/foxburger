@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCart } from '../cart/CartContext';
 import { lineTotal } from '../cart/cart';
 import { Card } from '../components/Card';
+import { tightComma } from '../components/tightComma';
+import { groszeToNextHalf, stampsForOrder, stampsLabel } from '../loyalty/stamps';
 import { EmptyState } from '../components/EmptyState';
 import { Icon } from '../components/Icon';
 import { LocationPicker } from '../components/LocationPicker';
@@ -46,6 +48,7 @@ export default function CartScreen() {
     );
   }
 
+  const stamps = stampsForOrder(total, tenant.loyalty.zlPerHalfStamp);
   const pickup = effectivePickup(mode, time, slots);
   const chosenTime = pickup.time;
   const submit = () => {
@@ -115,10 +118,10 @@ export default function CartScreen() {
         </Card>
 
         <View style={styles.club}>
-          <View style={styles.clubDot}><Icon name="check" size={16} color={colors.dark} strokeWidth={3} /></View>
+          <View style={[styles.clubDot, stamps === 0 && styles.clubDotOff]}>{stamps > 0 && <Icon name="check" size={16} color={colors.dark} strokeWidth={3} />}</View>
           <View>
-            <Txt w="bold" size={14} color="#FFFFFF">+1 pieczątka w Fox Club</Txt>
-            <Txt size={12} color="#D6D3D1">Doliczymy ją po odbiorze zamówienia</Txt>
+            <Txt w="bold" size={14} color="#FFFFFF">{tightComma(stamps > 0 ? `+${stampsLabel(stamps)} w ${tenant.loyalty.clubName}` : `Jeszcze ${formatPLN(groszeToNextHalf(total, tenant.loyalty.zlPerHalfStamp))} do 0,5 pieczątki`)}</Txt>
+            <Txt size={12} color="#D6D3D1">{stamps > 0 ? 'Doliczymy po odbiorze zamówienia' : `Pół pieczątki za każde pełne ${tenant.loyalty.zlPerHalfStamp} zł`}</Txt>
           </View>
         </View>
 
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
   thumb: { width: 56, height: 56, borderRadius: 14, backgroundColor: colors.bg },
   more: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingTop: 12, minHeight: 44 },
   club: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16, borderRadius: 22, backgroundColor: colors.dark },
+  clubDotOff: { backgroundColor: 'transparent', borderWidth: 2, borderColor: '#57534E' },
   clubDot: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.stampOn, alignItems: 'center', justifyContent: 'center' },
   pay: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 52 },
   border: { borderBottomWidth: 1, borderBottomColor: '#F1EAE4' },

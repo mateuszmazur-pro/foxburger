@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Line, Path, Polygon } from 'react-native-svg';
 import { useCart } from '../cart/CartContext';
@@ -10,18 +10,11 @@ import { tenant } from '../tenant';
 import { priceNumber } from '../menu/menuText';
 import { colors } from '../theme';
 import { TAB_BAR_HEIGHT } from './TabBar';
+import { tightComma } from './tightComma';
 import { Txt } from './Txt';
 
 const TEETH_H = 8;
 
-/** Przecinek w Plus Jakarta ma szeroki lewy margines – dosuwamy go do cyfry przed nim („0,5” zamiast „0 ,5”). */
-function tightComma(text: string) {
-  return text.split(/(\d,)/).map((part, i) =>
-    /^\d,$/.test(part)
-      ? <Text key={i}><Text style={{ letterSpacing: -1.8 }}>{part[0]}</Text>,</Text>
-      : part,
-  );
-}
 const MAX_ICONS = 5;
 
 function StampIcons({ stamps }: { stamps: number }) {
