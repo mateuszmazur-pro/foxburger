@@ -1,0 +1,44 @@
+name: Aktualizacja w powietrzu (EAS Update)
+
+# Po każdym pushu ze zmianami w aplikacji wysyła aktualizację do wersji testowej (kanał „preview”).
+# Telefon pobiera ją przy ponownym otwarciu aplikacji.
+on:
+  push:
+    branches: [main, etap-1]
+    paths: ['app/**']
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Czy projekt EAS już istnieje?
+        id: check
+        run: grep -q '"projectId"' app.json && echo "ok=true" >> "$GITHUB_OUTPUT" || echo "ok=false" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.ok == 'true'
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - uses: expo/expo-github-action@v8
+        if: steps.check.outputs.ok == 'true'
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - if: steps.check.outputs.ok == 'true'
+        run: npm install --no-audit --no-fund
+
+      - name: Wyślij aktualizację
+        if: steps.check.outputs.ok == 'true'
+        env:
+          MSG: ${{ github.event.head_commit.message || 'Aktualizacja' }}
+        run: eas update --branch preview --message "$(echo "$MSG" | head -n1)" --non-interactive

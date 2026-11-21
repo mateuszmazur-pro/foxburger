@@ -7,16 +7,21 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "pl.foxburger.app",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1C1917",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "pl.foxburger.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -24,11 +29,20 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-splash-screen"
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-logo.png",
+          "imageWidth": 200,
+          "backgroundColor": "#1C1917",
+          "resizeMode": "contain"
+        }
+      ]
     ],
     "scheme": "foxburger",
-    "splash": {
-      "backgroundColor": "#1C1917"
+    "owner": "estaloca-studio",
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

@@ -1,0 +1,55 @@
+name: Budowa aplikacji (EAS Build)
+
+# Buduje testową wersję aplikacji (profil „preview”) bez komputera:
+# Android — plik APK, iPhone — instalacja wewnętrzna (zarejestrowane urządzenia).
+# Uruchamia się, gdy zmieni się plik app/.budowa (albo ręcznie z zakładki Actions).
+# Przy pierwszym uruchomieniu zakłada projekt na expo.dev i zapisuje jego ID w app.json.
+on:
+  push:
+    branches: [main, etap-1]
+    paths: ['app/.budowa']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - run: npm install --no-audit --no-fund
+
+      - name: Projekt na expo.dev (tylko za pierwszym razem)
+        run: |
+          if ! grep -q '"projectId"' app.json; then
+            eas init --non-interactive --force
+            eas update:configure --platform all --non-interactive
+            git config user.name "github-actions[bot]"
+            git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+            git add app.json
+            git diff --cached --quiet || { git commit -m "EAS: ID projektu i adres aktualizacji"; git push; }
+          fi
+
+      - name: Zbuduj Android (APK)
+        run: eas build --platform android --profile preview --non-interactive --no-wait
+
+      - name: Zbuduj iPhone
+        continue-on-error: true
+        run: eas build --platform ios --profile preview --non-interactive --no-wait
+
+      - name: Świeża aktualizacja po budowie
+        run: eas update --branch preview --message "Po budowie nowej wersji" --non-interactive
