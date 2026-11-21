@@ -9,15 +9,13 @@ git pull
 for /f %%i in ('git rev-parse HEAD') do set AFTER=%%i
 
 cd app
-if not exist node_modules (
-  echo === Pierwsze uruchomienie: instaluje biblioteki ===
+rem Biblioteki instalujemy, gdy package-lock.json rozni sie od zapamietanej kopii
+rem (dziala tez, gdy zmiany sciagnal wczesniej Auto-pull).
+fc /b package-lock.json node_modules\.fox-lock >nul 2>&1
+if errorlevel 1 (
+  echo === Instaluje biblioteki ===
   call npm install
-) else (
-  git diff --quiet %BEFORE% %AFTER% -- package.json package-lock.json
-  if errorlevel 1 (
-    echo === Doszly nowe biblioteki: instaluje ===
-    call npm install
-  )
+  copy /y package-lock.json node_modules\.fox-lock >nul
 )
 
 echo === Wlaczam automatyczne pobieranie zmian co 15 sekund (osobne okno) ===
