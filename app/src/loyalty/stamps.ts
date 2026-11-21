@@ -1,7 +1,13 @@
-/** Pieczątki za zamówienie: każde rozpoczęte `zlPerHalf` zł to pół pieczątki (do 50 zł → 0,5; 50,01–100 → 1 …). */
+/** Pieczątki za zamówienie: pół pieczątki za każde pełne `zlPerHalf` zł (poniżej 50 zł → 0; 50 → 0,5; 100 → 1 …). */
 export function stampsForOrder(totalGrosze: number, zlPerHalf: number): number {
   if (totalGrosze <= 0) return 0;
-  return Math.ceil(totalGrosze / (zlPerHalf * 100)) / 2;
+  return Math.floor(totalGrosze / (zlPerHalf * 100)) / 2;
+}
+
+/** Ile groszy brakuje do kolejnej połówki pieczątki. */
+export function groszeToNextHalf(totalGrosze: number, zlPerHalf: number): number {
+  const step = zlPerHalf * 100;
+  return step - (Math.max(0, totalGrosze) % step);
 }
 
 /** „0,5 pieczątki”, „1 pieczątka”, „2 pieczątki”, „5 pieczątek”. */

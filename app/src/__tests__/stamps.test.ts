@@ -1,15 +1,21 @@
-import { stampsForOrder, stampsLabel } from '../loyalty/stamps';
+import { groszeToNextHalf, stampsForOrder, stampsLabel } from '../loyalty/stamps';
 
 const ZL = 100;
 
-test('do 50 zł pół pieczątki, każde kolejne rozpoczęte 50 zł to pół więcej', () => {
-  expect(stampsForOrder(39 * ZL, 50)).toBe(0.5);
+test('pół pieczątki za każde pełne 50 zł — poniżej 50 zł nic', () => {
+  expect(stampsForOrder(39 * ZL, 50)).toBe(0);
+  expect(stampsForOrder(50 * ZL - 1, 50)).toBe(0);
   expect(stampsForOrder(50 * ZL, 50)).toBe(0.5);
-  expect(stampsForOrder(50 * ZL + 1, 50)).toBe(1);
-  expect(stampsForOrder(78 * ZL, 50)).toBe(1);
+  expect(stampsForOrder(78 * ZL, 50)).toBe(0.5);
   expect(stampsForOrder(100 * ZL, 50)).toBe(1);
-  expect(stampsForOrder(117 * ZL, 50)).toBe(1.5);
-  expect(stampsForOrder(156 * ZL, 50)).toBe(2);
+  expect(stampsForOrder(117 * ZL, 50)).toBe(1);
+  expect(stampsForOrder(156 * ZL, 50)).toBe(1.5);
+});
+
+test('ile brakuje do następnej połówki', () => {
+  expect(groszeToNextHalf(39 * ZL, 50)).toBe(11 * ZL);
+  expect(groszeToNextHalf(78 * ZL, 50)).toBe(22 * ZL);
+  expect(groszeToNextHalf(100 * ZL, 50)).toBe(50 * ZL);
 });
 
 test('pusty koszyk nie daje pieczątek', () => {
