@@ -37,6 +37,5 @@ const styles = StyleSheet.create({
   info: { flex: 1, gap: 2 },
   plus: {
     width: 44, height: 44, borderRadius: 22, backgroundColor: colors.brand, alignItems: 'center', justifyContent: 'center',
-    shadowColor: colors.brand, shadowOpacity: 0.25, shadowRadius: 8, shadowOffset: { width: 0, height: 6 }, elevation: 3,
   },
 });
