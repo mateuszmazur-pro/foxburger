@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Intro } from '../components/Intro';
 import { tenant } from '../tenant';
 import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_500Medium, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold, PlusJakartaSans_800ExtraBold } from '@expo-google-fonts/plus-jakarta-sans';
+import { Figtree_900Black } from '@expo-google-fonts/figtree';
 import { CartProvider } from '../cart/CartContext';
 import { LocationProvider } from '../state/LocationContext';
 import { OrdersProvider } from '../orders/OrdersContext';
@@ -13,7 +14,7 @@ import { colors } from '../theme';
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
-  const [loaded] = useFonts({ PlusJakartaSans_400Regular, PlusJakartaSans_500Medium, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold, PlusJakartaSans_800ExtraBold });
+  const [loaded] = useFonts({ PlusJakartaSans_400Regular, PlusJakartaSans_500Medium, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold, PlusJakartaSans_800ExtraBold, Figtree_900Black });
   const [introDone, setIntroDone] = useState(!tenant.introSvg);
   const hideSplash = useCallback(() => { SplashScreen.hideAsync().catch(() => {}); }, []);
   const finishIntro = useCallback(() => setIntroDone(true), []);

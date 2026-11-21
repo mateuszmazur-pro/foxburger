@@ -7,6 +7,7 @@ export const fonts = {
   semibold: 'PlusJakartaSans_600SemiBold',
   bold: 'PlusJakartaSans_700Bold',
   extrabold: 'PlusJakartaSans_800ExtraBold',
+  price: 'Figtree_900Black',
 };
 export const shadow = {
   shadowColor: '#1C1917',
