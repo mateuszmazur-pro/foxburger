@@ -90,6 +90,5 @@ const styles = StyleSheet.create({
   priceRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   cta: {
     height: 52, paddingHorizontal: 34, borderRadius: 26, backgroundColor: colors.brand, justifyContent: 'center',
-    shadowColor: colors.brand, shadowOpacity: 0.28, shadowRadius: 12, shadowOffset: { width: 0, height: 10 }, elevation: 4,
   },
 });

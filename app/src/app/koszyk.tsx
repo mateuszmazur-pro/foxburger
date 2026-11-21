@@ -193,6 +193,5 @@ const styles = StyleSheet.create({
   },
   payBtn: {
     height: 56, borderRadius: 28, backgroundColor: colors.brand, alignItems: 'center', justifyContent: 'center',
-    shadowColor: colors.brand, shadowOpacity: 0.28, shadowRadius: 12, shadowOffset: { width: 0, height: 10 }, elevation: 4,
   },
 });

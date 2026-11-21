@@ -122,6 +122,5 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     flex: 1, height: 52, borderRadius: 26, backgroundColor: colors.brand, alignItems: 'center', justifyContent: 'center',
-    shadowColor: colors.brand, shadowOpacity: 0.28, shadowRadius: 12, shadowOffset: { width: 0, height: 10 }, elevation: 4,
   },
 });

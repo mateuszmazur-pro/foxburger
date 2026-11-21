@@ -12,7 +12,7 @@ export function PrimaryButton({ label, onPress, icon, variant = 'brand', disable
       accessibilityRole="button"
       onPress={onPress}
       disabled={disabled}
-      style={({ pressed }) => [styles.btn, { backgroundColor: bg, height, borderRadius: height / 2, opacity: disabled ? 0.5 : pressed ? 0.85 : 1 }, variant === 'brand' && styles.glow]}
+      style={({ pressed }) => [styles.btn, { backgroundColor: bg, height, borderRadius: height / 2, opacity: disabled ? 0.5 : pressed ? 0.85 : 1 }]}
     >
       <View style={styles.row}>
         {icon && <Icon name={icon} size={19} color="#FFFFFF" />}
@@ -25,5 +25,4 @@ export function PrimaryButton({ label, onPress, icon, variant = 'brand', disable
 const styles = StyleSheet.create({
   btn: { alignItems: 'center', justifyContent: 'center', paddingHorizontal: 22 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  glow: { shadowColor: colors.brand, shadowOpacity: 0.28, shadowRadius: 12, shadowOffset: { width: 0, height: 10 }, elevation: 4 },
 });
