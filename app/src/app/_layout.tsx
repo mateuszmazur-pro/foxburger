@@ -23,7 +23,7 @@ export default function RootLayout() {
     <LocationProvider>
       <CartProvider>
         <OrdersProvider>
-          <StatusBar style={introDone ? 'dark' : 'light'} />
+          {!introDone && <StatusBar style="light" />}
           <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="produkt/[id]" options={{ presentation: 'card' }} />
