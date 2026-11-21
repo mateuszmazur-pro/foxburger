@@ -66,6 +66,6 @@ export type Tenant = {
   categories: Category[];
   products: Product[];
   banner: BannerSlide[];
-  loyalty: { stampsToReward: number; demoStamps: number };
+  loyalty: { stampsToReward: number; demoStamps: number; /** co ile zł pół pieczątki za zamówienie */ zlPerHalfStamp: number };
   demoCustomer: { id: string; firstName: string };
 };

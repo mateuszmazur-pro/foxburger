@@ -71,6 +71,6 @@ export const fox: Tenant = {
     { id: 'burger-tygodnia', label: 'BURGER TYGODNIA', title: 'Fox Farmer', description: '100% wołowiny, bekon, ser, jajo sadzone i sos firmowy.', image: burgerImg, priceLabel: 'Cena', price: 3900, cta: 'Zamów', productId: 'fox-farmer' },
     { id: 'promocja', label: 'PROMOCJA', title: 'Zestaw z frytkami', description: 'Burger, duże frytki belgijskie i napój w lepszej cenie.', image: burgerImg, priceLabel: 'Cena zestawu', cta: 'Zamów', productId: 'fox-farmer' },
   ],
-  loyalty: { stampsToReward: 10, demoStamps: 7 },
+  loyalty: { stampsToReward: 10, demoStamps: 7, zlPerHalfStamp: 50 },
   demoCustomer: { id: 'demo-mateusz', firstName: 'Mateusz' },
 };
