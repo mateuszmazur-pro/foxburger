@@ -40,11 +40,13 @@ export default function ProductScreen() {
           </View>
         </View>
         <View style={styles.body}>
-          <View style={styles.titleRow}>
-            <Txt w="extrabold" size={28} style={{ flex: 1, letterSpacing: -0.5 }}>{product.name}</Txt>
-            <Txt w="extrabold" size={24} color={colors.brand}>{formatPLN(product.price)}</Txt>
+          <View style={{ gap: 4 }}>
+            <View style={styles.titleRow}>
+              <Txt w="extrabold" size={28} style={{ flex: 1, letterSpacing: -0.5 }}>{product.name}</Txt>
+              <Txt w="extrabold" size={24} color={colors.brand}>{formatPLN(product.price)}</Txt>
+            </View>
+            <Txt size={14} color={colors.muted} style={{ lineHeight: 20 }}>{product.description}</Txt>
           </View>
-          <Txt size={14} color={colors.muted} style={{ lineHeight: 20 }}>{product.description}</Txt>
           {product.addons.length > 0 && (
             <View>
               <Txt w="extrabold" size={16} style={{ marginBottom: 4 }}>Dodatki</Txt>
