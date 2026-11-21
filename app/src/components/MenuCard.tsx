@@ -10,8 +10,9 @@ import { colors } from '../theme';
 import { QtyStepper } from './QtyStepper';
 import { Txt } from './Txt';
 
-const SIDE = 76; // szerokość kolumny z ceną i przyciskiem
-const SIDE_STEPPER = 116;
+const SIDE = 96; // stała szerokość kolumny z ceną i przyciskiem – nic się nie przesuwa
+const SPLAT_W = 94;
+const SPLAT_H = 52;
 const DOT = '#D6C7BE';
 
 /** Koło z ząbkowaną krawędzią (jak w logo) – punkty wielokąta. */
@@ -43,10 +44,10 @@ function ToothedPlus({ label, onPress }: { label: string; onPress: () => void })
 function Price({ grosze }: { grosze: number }) {
   const splat = tenant.priceSplatSvg;
   return (
-    <View style={styles.priceWrap}>
+    <View style={styles.priceBox}>
       {splat && (
         <View style={styles.splat} pointerEvents="none">
-          <SvgXml xml={splat} width={94} height={52} color={colors.brand} />
+          <SvgXml xml={splat} width={SPLAT_W} height={SPLAT_H} color={colors.brand} />
         </View>
       )}
       <Txt w="price" size={36} color={splat ? '#FFFFFF' : colors.text} style={styles.price}>{priceNumber(grosze)}</Txt>
@@ -68,7 +69,6 @@ export function MenuCard({ product }: { product: Product }) {
   const { lines, add, setQty } = useCart();
   const qty = qtyForProduct(lines, product.id);
   const key = plainKey(product.id);
-  const side = qty > 0 ? SIDE_STEPPER : SIDE;
   const open = () => router.push(`/produkt/${product.id}`);
   return (
     <View style={styles.card}>
@@ -82,15 +82,15 @@ export function MenuCard({ product }: { product: Product }) {
             <Line x1={2} y1={2} x2="100%" y2={2} stroke={DOT} strokeWidth={2} strokeDasharray="0.1 5" strokeLinecap="round" />
           </Svg>
         </View>
-        <View style={[styles.side, { width: side }]}><Price grosze={product.price} /></View>
+        <View style={styles.side}><Price grosze={product.price} /></View>
       </Pressable>
       <View style={styles.row2}>
         <Txt size={13.5} color={colors.muted} style={styles.desc}>{descLines(product.description).join('\n')}</Txt>
-        <View style={[styles.side, styles.sideBottom, { width: side }]}>
+        <View style={[styles.side, styles.sideBottom]}>
           {qty === 0 ? (
             <ToothedPlus label={`Dodaj ${product.name} do koszyka`} onPress={() => add({ productId: product.id })} />
           ) : (
-            <QtyStepper qty={qty} label={product.name} onInc={() => add({ productId: product.id })} onDec={() => setQty(key, qty - 1)} />
+            <QtyStepper compact qty={qty} label={product.name} onInc={() => add({ productId: product.id })} onDec={() => setQty(key, qty - 1)} />
           )}
         </View>
       </View>
@@ -106,11 +106,11 @@ const styles = StyleSheet.create({
   row1: { flexDirection: 'row', alignItems: 'flex-end', gap: 8 },
   name: { flexShrink: 1, lineHeight: 26 },
   leader: { flex: 1, minWidth: 12, marginBottom: 6 },
-  side: { alignItems: 'center' },
+  side: { width: SIDE, alignItems: 'center' },
   sideBottom: { justifyContent: 'flex-end' },
-  priceWrap: { paddingHorizontal: 12, alignItems: 'center', justifyContent: 'center' },
-  splat: { position: 'absolute', top: '50%', left: '50%', width: 94, height: 52, marginLeft: -47, marginTop: -25, transform: [{ rotate: '-4deg' }] },
-  price: { lineHeight: 40, letterSpacing: -0.7, includeFontPadding: false },
+  priceBox: { width: SPLAT_W, height: 44, alignItems: 'center', justifyContent: 'center' },
+  splat: { position: 'absolute', left: 0, top: (44 - SPLAT_H) / 2, width: SPLAT_W, height: SPLAT_H, transform: [{ rotate: '-4deg' }] },
+  price: { lineHeight: 40, letterSpacing: -0.7, textAlign: 'center', includeFontPadding: false },
   row2: { flexDirection: 'row', gap: 8, marginTop: 2 },
   desc: { flex: 1, lineHeight: 19 },
   plus: { width: 46, height: 46, alignItems: 'center', justifyContent: 'center' },
