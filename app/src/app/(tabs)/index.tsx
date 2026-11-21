@@ -1,5 +1,6 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { setStatusBarStyle } from 'expo-status-bar';
+import { useCallback, useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { BELOW_HEADER, ToothedHeader } from '../../components/ToothedHeader';
 import { RoundIconButton } from '../../components/RoundIconButton';
@@ -17,6 +18,11 @@ export default function StartScreen() {
   const { location } = useLocation();
   const [picking, setPicking] = useState(false);
   const hero = tenant.banner[0]?.image ?? tenant.products[0].image;
+  // ciemny nagłówek → jasny pasek stanu tylko na tym ekranie
+  useFocusEffect(useCallback(() => {
+    setStatusBarStyle('light');
+    return () => setStatusBarStyle('dark');
+  }, []));
   return (
     <View style={styles.screen}>
       <ToothedHeader
