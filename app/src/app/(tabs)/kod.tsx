@@ -39,7 +39,7 @@ export default function CodeScreen() {
           <Txt w="extrabold" size={13} color={colors.navActive} style={{ letterSpacing: 1.8 }}>TWOJE PIECZĄTKI</Txt>
           <Txt w="extrabold" size={13} color="#FFFFFF">{String(demoStamps).replace('.', ',')}/{stampsToReward}</Txt>
         </View>
-        <View style={styles.between}>
+        <View style={[styles.between, { paddingBottom: 12 }]}>
           {stampSlots(demoStamps, stampsToReward).map((slot, i) => (
             <StampIcon key={i} slot={slot} size={28} />
           ))}

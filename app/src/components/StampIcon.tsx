@@ -1,11 +1,14 @@
 import { useId } from 'react';
+import { View } from 'react-native';
 import Svg, { Circle, ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
 import type { StampSlot } from '../loyalty/stamps';
 import { tenant } from '../tenant';
 import { colors } from '../theme';
+import { Txt } from './Txt';
 
 const EMPTY = '#57534E';
 const ICON_OFF = '#44403C';
+const ICON_REWARD = '#78716C';
 const ICON_W = 1071.16;
 
 /** Ikona marki (np. burger) wpisana w pole 40×40. */
@@ -24,15 +27,21 @@ export function StampIcon({ slot, size = 44 }: { slot: StampSlot; size?: number 
   const d = tenant.stampPath;
   if (d) {
     const big = { d, x: 2, y: 3, w: 36 };
+    if (slot === 'reward') {
+      return (
+        <View style={{ width: size, height: size }}>
+          <Svg width={size} height={size} viewBox="0 0 40 40">
+            <Mark {...big} color={ICON_REWARD} />
+          </Svg>
+          <Txt w="extrabold" size={Math.max(9, size * 0.26)} color={colors.navActive} numberOfLines={1} style={{ position: 'absolute', top: size, left: -10, right: -10, textAlign: 'center', letterSpacing: 0.4 }}>
+            GRATIS!
+          </Txt>
+        </View>
+      );
+    }
     return (
       <Svg width={size} height={size} viewBox="0 0 40 40">
-        {slot === 'reward' ? (
-          <>
-            <Circle cx={20} cy={20} r={18} fill="none" stroke={colors.navActive} strokeWidth={1.6} />
-            <Mark d={d} color={colors.navActive} x={9} y={10} w={22} />
-          </>
-        ) : (
-          <>
+        <>
             <Mark {...big} color={slot === 'full' ? colors.stampOn : ICON_OFF} />
             {slot === 'half' && (
               <>
@@ -46,8 +55,7 @@ export function StampIcon({ slot, size = 44 }: { slot: StampSlot; size?: number 
                 </G>
               </>
             )}
-          </>
-        )}
+        </>
       </Svg>
     );
   }
