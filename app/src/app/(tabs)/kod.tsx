@@ -22,9 +22,9 @@ export default function CodeScreen() {
         <Txt size={14} color={colors.muted}>Pokaż przy kasie, żeby zebrać pieczątkę</Txt>
       </View>
       <View style={[styles.card, shadow]}>
-        <Txt w="extrabold" size={12} color={colors.brandDark} style={{ letterSpacing: 2.4 }}>{`FOX CLUB · ${tenant.demoCustomer.firstName.toUpperCase()}`}</Txt>
+        <Txt w="extrabold" size={12} color={colors.brandDark} style={{ letterSpacing: 2.4 }}>{`${tenant.loyalty.programName.toUpperCase()} · ${tenant.demoCustomer.firstName.toUpperCase()}`}</Txt>
         <View accessible accessibilityLabel={`Kod QR ${code}`}>
-          <QRCode value={`FOXCLUB:${code}`} size={220} color={colors.dark} backgroundColor="#FFFFFF" />
+          <QRCode value={`${tenant.loyalty.qrPrefix}:${code}`} size={220} color={colors.dark} backgroundColor="#FFFFFF" />
         </View>
         <Txt w="extrabold" size={16} style={{ letterSpacing: 2 }}>{code.replace('-', ' · ')}</Txt>
         <View style={{ alignSelf: 'stretch', gap: 6 }}>

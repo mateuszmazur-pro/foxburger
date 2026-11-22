@@ -117,7 +117,7 @@ export default function CartScreen() {
         <View style={styles.club}>
           <View style={styles.clubDot}><Icon name="check" size={16} color={colors.dark} strokeWidth={3} /></View>
           <View>
-            <Txt w="bold" size={14} color="#FFFFFF">+1 pieczątka w Fox Club</Txt>
+            <Txt w="bold" size={14} color="#FFFFFF">+1 pieczątka w {tenant.loyalty.programName}</Txt>
             <Txt size={12} color="#D6D3D1">Doliczymy ją po odbiorze zamówienia</Txt>
           </View>
         </View>

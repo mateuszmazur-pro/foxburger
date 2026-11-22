@@ -53,15 +53,36 @@ export type BannerSlide = {
   productId?: string;
 };
 
-export type Tenant = {
-  id: string;
-  name: string;
-  colors: Colors;
-  logoSvg: string;
+export type Loyalty = {
+  /** Nazwa programu lojalnościowego, np. „Fox Club”. */
+  programName: string;
+  /** Przedrostek w kodzie QR, np. „FOXCLUB” — kasa rozpoznaje po nim lokal. */
+  qrPrefix: string;
+  stampsToReward: number;
+  demoStamps: number;
+};
+
+export type Texts = {
+  /** Druga linia powitania na ekranie Start, pod „Witaj, Imię!”. */
+  homeTitle: string;
+  /** Tekst na pustej zakładce Promocje. */
+  promoEmpty: string;
+};
+
+/** Treść restauracji z brand/restauracja.ts — wszystko poza nazwą, kolorami i logo. */
+export type RestaurantContent = {
   locations: Location[];
   categories: Category[];
   products: Product[];
   banner: BannerSlide[];
-  loyalty: { stampsToReward: number; demoStamps: number };
+  loyalty: Loyalty;
+  texts: Texts;
   demoCustomer: { id: string; firstName: string };
+};
+
+export type Tenant = RestaurantContent & {
+  id: string;
+  name: string;
+  colors: Colors;
+  logoSvg: string;
 };

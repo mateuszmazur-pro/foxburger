@@ -25,7 +25,7 @@ export default function StartScreen() {
       />
       <View style={{ paddingTop: BELOW_HEADER, paddingHorizontal: 20 }}>
         <Txt w="extrabold" size={28} style={styles.title} accessibilityRole="header">
-          {`Witaj, ${tenant.demoCustomer.firstName}!\nZamów swojego Foxa.`}
+          {`Witaj, ${tenant.demoCustomer.firstName}!\n${tenant.texts.homeTitle}`}
         </Txt>
       </View>
       <Image source={hero} resizeMode="contain" style={styles.hero} accessibilityLabel={tenant.name} />
