@@ -1,11 +1,56 @@
-import Svg, { Circle, Path } from 'react-native-svg';
+import { useId } from 'react';
+import Svg, { Circle, ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
 import type { StampSlot } from '../loyalty/stamps';
+import { tenant } from '../tenant';
 import { colors } from '../theme';
 
 const EMPTY = '#57534E';
+const ICON_OFF = '#44403C';
+const ICON_W = 1071.16;
 
-/** Jedno pole karty pieczątek (pełne z ptaszkiem, połówka, puste, nagroda). */
+/** Ikona marki (np. burger) wpisana w pole 40×40. */
+function Mark({ d, color, x, y, w }: { d: string; color: string; x: number; y: number; w: number }) {
+  const k = w / ICON_W;
+  return (
+    <G transform={`translate(${x} ${y}) scale(${k})`}>
+      <Path d={d} fill={color} />
+    </G>
+  );
+}
+
+/** Jedno pole karty pieczątek: zebrana (kolor marki), połówka, niezebrana (szara), nagroda (złota). */
 export function StampIcon({ slot, size = 44 }: { slot: StampSlot; size?: number }) {
+  const clipId = `half-${useId().replace(/:/g, '')}`;
+  const d = tenant.stampPath;
+  if (d) {
+    const big = { d, x: 2, y: 3, w: 36 };
+    return (
+      <Svg width={size} height={size} viewBox="0 0 40 40">
+        {slot === 'reward' ? (
+          <>
+            <Circle cx={20} cy={20} r={18} fill="none" stroke={colors.navActive} strokeWidth={1.6} />
+            <Mark d={d} color={colors.navActive} x={9} y={10} w={22} />
+          </>
+        ) : (
+          <>
+            <Mark {...big} color={slot === 'full' ? colors.stampOn : ICON_OFF} />
+            {slot === 'half' && (
+              <>
+                <Defs>
+                  <ClipPath id={clipId}>
+                    <Rect x={0} y={0} width={20} height={40} />
+                  </ClipPath>
+                </Defs>
+                <G clipPath={`url(#${clipId})`}>
+                  <Mark {...big} color={colors.stampOn} />
+                </G>
+              </>
+            )}
+          </>
+        )}
+      </Svg>
+    );
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 20 20">
       {slot === 'full' && (

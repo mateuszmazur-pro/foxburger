@@ -58,6 +58,8 @@ export type Tenant = {
   name: string;
   colors: Colors;
   logoSvg: string;
+  /** ścieżka SVG ikony pieczątki (viewBox 1071.16×977.85); brak = kółka */
+  stampPath?: string;
   /** Animowane intro przy starcie aplikacji (SVG z animacjami CSS). */
   introSvg?: string;
   /** Grafika pod ceną w menu (np. maźnięcie pędzla), rysowana kolorem marki. */
