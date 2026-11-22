@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCart } from '../cart/CartContext';
 import { lineTotal } from '../cart/cart';
 import { Card } from '../components/Card';
+import { FadeCard } from '../components/FadeCard';
 import { tightComma } from '../components/tightComma';
 import { groszeToNextHalf, stampsForOrder, stampsLabel } from '../loyalty/stamps';
 import { EmptyState } from '../components/EmptyState';
@@ -89,7 +90,7 @@ export default function CartScreen() {
           )}
         </Card>
 
-        <Card>
+        <FadeCard>
           <Txt w="extrabold" size={16}>Produkty</Txt>
           {lines.map((l) => {
             const p = tenant.products.find((x) => x.id === l.productId);
@@ -115,7 +116,7 @@ export default function CartScreen() {
             <Icon name="plus" size={16} color={colors.brand} strokeWidth={2.6} />
             <Txt w="bold" size={14} color={colors.brand}>Dodaj coś jeszcze</Txt>
           </Pressable>
-        </Card>
+        </FadeCard>
 
         <View style={styles.club}>
           <View style={[styles.clubDot, stamps === 0 && styles.clubDotOff]}>{stamps > 0 && <Icon name="check" size={16} color={colors.dark} strokeWidth={3} />}</View>
@@ -180,8 +181,8 @@ const styles = StyleSheet.create({
   choice: { flex: 1, height: 58, borderRadius: 16, borderWidth: 1, borderColor: '#E7E0D6', backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center' },
   choiceOn: { borderWidth: 2, borderColor: colors.brand, backgroundColor: '#FDF2F1' },
   slot: { height: 44, paddingHorizontal: 16, borderRadius: 22, borderWidth: 1, borderColor: '#E7E0D6', justifyContent: 'center' },
-  line: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F1EAE4' },
-  thumb: { width: 56, height: 56, borderRadius: 14, backgroundColor: colors.bg },
+  line: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#EFE6DF' },
+  thumb: { width: 64, height: 56 },
   more: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingTop: 12, minHeight: 44 },
   club: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16, borderRadius: 22, backgroundColor: colors.dark },
   clubDotOff: { backgroundColor: 'transparent', borderWidth: 2, borderColor: '#57534E' },
