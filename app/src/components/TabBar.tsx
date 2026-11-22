@@ -26,7 +26,7 @@ export function TabBar({ state, navigateToTab }: BottomTabBarProps) {
   return (
     <>
     {/* Rozmycie treści przewijanej pod dolnym menu. */}
-    <View pointerEvents="none" style={[styles.blurZone, { height: bottom + TAB_BAR_HEIGHT + 22 }]}>
+    <View pointerEvents="none" style={[styles.blurZone, { height: bottom + TAB_BAR_HEIGHT / 2 }]}>
       <BlurView intensity={35} tint="light" style={StyleSheet.absoluteFill} />
       <View style={[StyleSheet.absoluteFill, styles.blurTint]} />
     </View>
