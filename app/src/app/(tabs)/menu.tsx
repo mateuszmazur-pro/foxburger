@@ -42,7 +42,7 @@ export default function MenuScreen() {
       </BlurTargetView>
 
       <View style={[styles.header, { paddingTop: insets.top + 2 }]} onLayout={(e) => setHeaderH(e.nativeEvent.layout.height)}>
-        <BlurView blurTarget={target} blurMethod="dimezisBlurViewSdk31Plus" intensity={40} tint="light" style={StyleSheet.absoluteFill} />
+        <BlurView blurTarget={target} blurMethod="dimezisBlurViewSdk31Plus" intensity={70} tint="light" style={StyleSheet.absoluteFill} />
         <View style={[StyleSheet.absoluteFill, styles.frost]} />
         <View style={styles.head}>
           <Pressable accessibilityRole="button" accessibilityLabel="Zmień lokal" onPress={() => setPicking(true)} hitSlop={6}>
@@ -84,7 +84,7 @@ export default function MenuScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   header: { position: 'absolute', top: 0, left: 0, right: 0, paddingHorizontal: 20, overflow: 'hidden' },
-  frost: { backgroundColor: 'rgba(248, 243, 240, 0.72)' },
+  frost: { backgroundColor: 'rgba(248, 243, 240, 0.4)' },
   head: { flexDirection: 'row', alignItems: 'center', minHeight: 44, marginBottom: 2 },
   locRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   tabs: { flexDirection: 'row', gap: 22, borderBottomWidth: 1, borderBottomColor: '#E7DDD5' },
