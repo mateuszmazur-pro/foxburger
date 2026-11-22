@@ -89,7 +89,7 @@ export default function AccountScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   row: { flexDirection: 'row', alignItems: 'center' },
-  grid: { gap: 10, marginTop: 18, paddingBottom: 12, alignSelf: 'center' },
+  grid: { gap: 10, marginTop: 18, paddingBottom: 12, alignSelf: 'flex-start' },
   gridRow: { flexDirection: 'row', gap: 12 },
   btn: { flex: 1, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   btnOutline: { borderWidth: 1.5, borderColor: '#57534E' },

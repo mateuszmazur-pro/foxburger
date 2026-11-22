@@ -33,7 +33,7 @@ export function StampIcon({ slot, size = 44 }: { slot: StampSlot; size?: number 
           <Svg width={size} height={size} viewBox="0 0 40 40">
             <Mark {...big} color={ICON_REWARD} />
           </Svg>
-          <Txt w="extrabold" size={Math.max(9, size * 0.26)} color={colors.navActive} numberOfLines={1} style={{ position: 'absolute', top: size, left: -10, right: -10, textAlign: 'center', letterSpacing: 0.4 }}>
+          <Txt w="extrabold" size={Math.max(9, size * 0.26)} color={ICON_REWARD} numberOfLines={1} style={{ position: 'absolute', top: size, left: -10, right: -10, textAlign: 'center', letterSpacing: 0.4 }}>
             GRATIS!
           </Txt>
         </View>
