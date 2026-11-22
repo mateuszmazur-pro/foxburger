@@ -1,0 +1,22 @@
+{
+  "nazwa": "Fox Burger",
+  "slug": "foxburger",
+  "identyfikatorAplikacji": "pl.foxburger.app",
+  "wersja": "1.0.0",
+  "kolorEkranuStartowego": "#1C1917",
+  "kolorTlaIkonyAndroid": "#1C1917",
+  "kolory": {
+    "bg": "#F8F3F0",
+    "card": "#FFFFFF",
+    "text": "#1C1917",
+    "muted": "#78716C",
+    "line": "#EDE4DD",
+    "brand": "#AD0000",
+    "brandDark": "#8A0000",
+    "brandLight": "#FBE6E4",
+    "navActive": "#FDBA74",
+    "navIdle": "#D6D3D1",
+    "dark": "#1C1917",
+    "stampOn": "#E0302A"
+  }
+}

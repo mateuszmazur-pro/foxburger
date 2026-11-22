@@ -2,12 +2,13 @@ import { ReactNode } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Svg, { Path, SvgXml } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { tenant } from '../tenant';
+import { logoAspect, tenant } from '../tenant';
 import { colors } from '../theme';
 import { toothPath } from './toothPath';
 
 export const LOGO_SIZE = 162;
 const DEPTH = 12;
+const LOGO_HEIGHT = LOGO_SIZE * logoAspect(tenant.logoSvg);
 
 /** Ciemny nagłówek z ząbkami; środek logo leży na dnie wcięcia pod środkiem ekranu. */
 export function ToothedHeader({ left, right }: { left?: ReactNode; right?: ReactNode }) {
@@ -24,8 +25,8 @@ export function ToothedHeader({ left, right }: { left?: ReactNode; right?: React
         <View>{left}</View>
         <View>{right}</View>
       </View>
-      <View pointerEvents="none" style={[styles.logo, { top: valley - LOGO_SIZE / 2, left: width / 2 - LOGO_SIZE / 2 }]}>
-        <SvgXml xml={tenant.logoSvg} width={LOGO_SIZE} height={LOGO_SIZE * (35697 / 34932)} />
+      <View pointerEvents="none" style={[styles.logo, { top: valley - LOGO_HEIGHT / 2, left: width / 2 - LOGO_SIZE / 2 }]}>
+        <SvgXml xml={tenant.logoSvg} width={LOGO_SIZE} height={LOGO_HEIGHT} />
       </View>
     </View>
   );
@@ -36,5 +37,5 @@ export const BELOW_HEADER = LOGO_SIZE / 2 + 18;
 
 const styles = StyleSheet.create({
   row: { position: 'absolute', left: 20, right: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  logo: { position: 'absolute', width: LOGO_SIZE, height: LOGO_SIZE * (35697 / 34932) },
+  logo: { position: 'absolute', width: LOGO_SIZE, height: LOGO_HEIGHT },
 });

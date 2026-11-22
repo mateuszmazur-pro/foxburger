@@ -1,7 +1,9 @@
-import type { Addon, Tenant } from './types';
-import { foxLogoSvg } from './fox-logo';
+// Treść restauracji: lokale, menu, ceny, banery, program lojalnościowy, teksty.
+// Nazwa, identyfikator i kolory są w brand.json, logo w logo.svg, zdjęcia w zdjecia/.
+// Ceny w groszach: 3900 = 39,00 zł.
+import type { Addon, RestaurantContent } from '../src/tenant/types';
 
-const burgerImg = require('../../assets/images/burger.jpg');
+const burgerImg = require('./zdjecia/burger.jpg');
 
 // PRZYKŁADOWE — do potwierdzenia z Foxem (ceny dodatków nieznane)
 const burgerAddons: Addon[] = [
@@ -20,24 +22,7 @@ const burger = (
   price: number,
 ) => ({ id, name, description, ingredients, price, categoryId: 'burgery', image: burgerImg, addons: burgerAddons, setUpgrade });
 
-export const fox: Tenant = {
-  id: 'fox-burger',
-  name: 'Fox Burger',
-  colors: {
-    bg: '#F8F3F0',
-    card: '#FFFFFF',
-    text: '#1C1917',
-    muted: '#78716C',
-    line: '#EDE4DD',
-    brand: '#AD0000',
-    brandDark: '#8A0000',
-    brandLight: '#FBE6E4',
-    navActive: '#FDBA74',
-    navIdle: '#D6D3D1',
-    dark: '#1C1917',
-    stampOn: '#E0302A',
-  },
-  logoSvg: foxLogoSvg,
+export const restauracja: RestaurantContent = {
   locations: [
     { id: 'pabianice', name: 'Pabianice', address: 'Popławska 4/20, Pabianice', phone: '+48503563292', closesAt: 21 },
     { id: 'opoczno', name: 'Opoczno', address: 'ul. Gen. Kazimierza Bończy-Załęskiego 29A, Opoczno', closesAt: 21 },
@@ -63,6 +48,10 @@ export const fox: Tenant = {
     { id: 'burger-tygodnia', label: 'BURGER TYGODNIA', title: 'Fox Farmer', description: '100% wołowiny, bekon, ser, sadzone jajko i nasz sos firmowy.', image: burgerImg, priceLabel: 'Cena', price: 3900, cta: 'Zamów', productId: 'fox-farmer' },
     { id: 'promocja', label: 'PROMOCJA', title: 'Zestaw z frytkami', description: 'Burger, duże frytki belgijskie i napój w lepszej cenie.', image: burgerImg, priceLabel: 'Cena zestawu', cta: 'Zamów', productId: 'fox-farmer' },
   ],
-  loyalty: { stampsToReward: 10, demoStamps: 7 },
+  loyalty: { programName: 'Fox Club', qrPrefix: 'FOXCLUB', stampsToReward: 10, demoStamps: 7 },
+  texts: {
+    homeTitle: 'Zamów swojego Foxa.',
+    promoEmpty: 'Tu pojawią się promocje i nowości Foxa.',
+  },
   demoCustomer: { id: 'demo-mateusz', firstName: 'Mateusz' },
 };

@@ -32,7 +32,7 @@ export default function OrderScreen() {
     { title: 'Zamówienie przyjęte', sub: `${hhmm(created)} · opłacone ${PAY[order.payment] ?? ''}`, state: 'done' },
     { title: 'W przygotowaniu', sub: 'Kuchnia już działa', state: status === 'przyjete' ? 'todo' : status === 'przygotowanie' ? 'now' : 'done' },
     { title: 'Gotowe do odbioru', sub: 'Damy znać powiadomieniem', state: status === 'gotowe' ? 'now' : 'todo' },
-    { title: 'Odebrane', sub: '+1 pieczątka w Fox Club', state: 'todo' },
+    { title: 'Odebrane', sub: `+1 pieczątka w ${tenant.loyalty.programName}`, state: 'todo' },
   ];
 
   return (

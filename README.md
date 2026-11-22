@@ -1,6 +1,6 @@
 # Fox Burger — aplikacja mobilna
 
-Aplikacja do zamawiania z odbiorem osobistym i program lojalnościowy Fox Club. Pierwsza restauracja na platformie gastro: kod jest wspólny, a wszystko, co dotyczy Foxa, siedzi w jednym pliku konfiguracji.
+Aplikacja do zamawiania z odbiorem osobistym i program lojalnościowy Fox Club. Pierwsza restauracja na platformie gastro. Wszystko, co dotyczy Foxa, siedzi w folderze `app/brand/` — projekt można zduplikować pod inną restaurację jedną komendą.
 
 ## Uruchomienie (Expo Go)
 
@@ -16,9 +16,19 @@ Zeskanuj kod QR w aplikacji Expo Go (Android) albo aparatem (iPhone). Telefon i 
 
 ## Gdzie co jest
 
-- `app/src/tenant/fox.ts` — dane restauracji: kolory, logo, lokale, menu, ceny, baner. **Ceny dodatków, zestawu, frytek i napojów są przykładowe — do potwierdzenia z Foxem.**
+- `app/brand/` — **wszystko, co dotyczy tej restauracji**: nazwa, identyfikator, kolory (`brand.json`), logo (`logo.svg`), ikony, zdjęcia, lokale i menu (`restauracja.ts`). Opis plików: `app/brand/README.md`. **Ceny dodatków, zestawu, frytek i napojów są przykładowe — do potwierdzenia z Foxem.**
 - `app/src/app/` — ekrany (Expo Router): Start, Menu, Mój kod, Promocje, Konto, produkt, koszyk, status zamówienia.
 - `app/src/cart/`, `app/src/loyalty/`, `app/src/orders/` — logika (koszyk, kod lojalnościowy, godziny odbioru, statusy) z testami w `app/src/__tests__/`.
+
+## Nowa apka dla innej restauracji
+
+```bash
+cd app
+npm run nowa-apka -- "Kowal Burger"
+# opcjonalnie: --folder ~/Projekty/kowal-burger  --id pl.kowalburger.app  --bez-git
+```
+
+Skrypt robi obok niezależną kopię całego projektu (bez `node_modules` i historii git), ustawia nazwę, slug i identyfikator aplikacji i robi pierwszy commit. Potem podmieniasz pliki w `app/brand/` nowej kopii. Każda kopia żyje osobno — zmiany w jednej nie dotykają innych.
 
 ## Etap 1 = demo
 
