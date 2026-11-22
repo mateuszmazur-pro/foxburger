@@ -1,4 +1,5 @@
 import type { BottomTabBarProps } from 'expo-router/tabs';
+import { BlurView } from 'expo-blur';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
@@ -21,8 +22,15 @@ export function useTabBarSpace() {
 
 export function TabBar({ state, navigateToTab }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
+  const bottom = Math.max(insets.bottom, 18);
   return (
-    <View style={[styles.bar, { bottom: Math.max(insets.bottom, 18) }]}>
+    <>
+    {/* Rozmycie treści przewijanej pod dolnym menu. */}
+    <View pointerEvents="none" style={[styles.blurZone, { height: bottom + TAB_BAR_HEIGHT + 22 }]}>
+      <BlurView intensity={35} tint="light" style={StyleSheet.absoluteFill} />
+      <View style={[StyleSheet.absoluteFill, styles.blurTint]} />
+    </View>
+    <View style={[styles.bar, { bottom }]}>
       {state.routes.map((route, i) => {
         const tab = TABS[route.name];
         if (!tab) return null;
@@ -43,10 +51,13 @@ export function TabBar({ state, navigateToTab }: BottomTabBarProps) {
         );
       })}
     </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  blurZone: { position: 'absolute', left: 0, right: 0, bottom: 0, overflow: 'hidden' },
+  blurTint: { backgroundColor: 'rgba(248, 243, 240, 0.35)' },
   bar: {
     position: 'absolute', left: 14, right: 14, height: TAB_BAR_HEIGHT, borderRadius: TAB_BAR_HEIGHT / 2,
     backgroundColor: colors.dark, flexDirection: 'row', alignItems: 'center',
