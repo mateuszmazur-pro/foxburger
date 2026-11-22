@@ -66,9 +66,13 @@ function ToothedPlus({ label, onPress }: { label: string; onPress: () => void })
         <Svg width={46} height={46} style={StyleSheet.absoluteFill}>
           <Polygon points={TOOTH} fill={colors.dark} />
         </Svg>
-        <Svg width={18} height={18} viewBox="0 0 24 24">
-          <Path d="M12 5v14M5 12h14" stroke="#FFFFFF" strokeWidth={3} strokeLinecap="round" />
-        </Svg>
+        {tenant.addIconSvg ? (
+          <SvgXml xml={tenant.addIconSvg} width={23} height={21} color="#FFFFFF" />
+        ) : (
+          <Svg width={18} height={18} viewBox="0 0 24 24">
+            <Path d="M12 5v14M5 12h14" stroke="#FFFFFF" strokeWidth={3} strokeLinecap="round" />
+          </Svg>
+        )}
       </Animated.View>
     </Pressable>
   );

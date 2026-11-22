@@ -62,6 +62,8 @@ export type Tenant = {
   introSvg?: string;
   /** Grafika pod ceną w menu (np. maźnięcie pędzla), rysowana kolorem marki. */
   priceSplatSvg?: string;
+  /** Własna ikona plusa na przycisku „dodaj” w menu. */
+  addIconSvg?: string;
   locations: Location[];
   categories: Category[];
   products: Product[];
