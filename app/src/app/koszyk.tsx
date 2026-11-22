@@ -62,34 +62,6 @@ export default function CartScreen() {
     <View style={styles.screen}>
       <ScreenHeader title="Twoje zamówienie" subtitle={`${tenant.name} · ${location.name}`} />
       <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 130, gap: 14 }}>
-        <Card style={{ gap: 12 }}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Zmień lokal odbioru" onPress={() => setPicking(true)} style={styles.locRow}>
-            <View style={styles.circle}><Icon name="pin" size={18} color={colors.brand} /></View>
-            <View style={{ flex: 1 }}>
-              <Txt w="bold" size={15}>Odbiór w lokalu</Txt>
-              <Txt size={12} color={colors.muted}>{location.address}</Txt>
-            </View>
-            <Txt w="bold" size={13} color={colors.brand}>zmień</Txt>
-          </Pressable>
-          <View style={styles.grid2}>
-            <Choice on={pickup.mode === 'asap'} title="Jak najszybciej" sub="ok. 20 min" onPress={() => setMode('asap')} />
-            <Choice on={pickup.mode === 'time'} title="Na godzinę" sub={slots.length ? chosenTime ?? 'wybierz' : 'brak terminów'} disabled={slots.length === 0} onPress={() => setMode('time')} />
-          </View>
-          {pickup.mode === 'time' && (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
-              {slots.map((s) => {
-                const on = s === chosenTime;
-                return (
-                  <Pressable key={s} accessibilityRole="radio" accessibilityState={{ selected: on }} onPress={() => setTime(s)}
-                    style={[styles.slot, on && { backgroundColor: colors.dark, borderColor: colors.dark }]}>
-                    <Txt w="bold" size={14} color={on ? '#FFFFFF' : colors.text}>{s}</Txt>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          )}
-        </Card>
-
         <FadeCard>
           <Txt w="extrabold" size={16}>Produkty</Txt>
           {lines.map((l) => {
@@ -117,6 +89,34 @@ export default function CartScreen() {
             <Txt w="bold" size={14} color={colors.brand}>Dodaj coś jeszcze</Txt>
           </Pressable>
         </FadeCard>
+
+        <Card style={{ gap: 12 }}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Zmień lokal odbioru" onPress={() => setPicking(true)} style={styles.locRow}>
+            <View style={styles.circle}><Icon name="pin" size={18} color={colors.brand} /></View>
+            <View style={{ flex: 1 }}>
+              <Txt w="bold" size={15}>Odbiór w lokalu</Txt>
+              <Txt size={12} color={colors.muted}>{location.address}</Txt>
+            </View>
+            <Txt w="bold" size={13} color={colors.brand}>zmień</Txt>
+          </Pressable>
+          <View style={styles.grid2}>
+            <Choice on={pickup.mode === 'asap'} title="Jak najszybciej" sub="ok. 20 min" onPress={() => setMode('asap')} />
+            <Choice on={pickup.mode === 'time'} title="Na godzinę" sub={slots.length ? chosenTime ?? 'wybierz' : 'brak terminów'} disabled={slots.length === 0} onPress={() => setMode('time')} />
+          </View>
+          {pickup.mode === 'time' && (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
+              {slots.map((s) => {
+                const on = s === chosenTime;
+                return (
+                  <Pressable key={s} accessibilityRole="radio" accessibilityState={{ selected: on }} onPress={() => setTime(s)}
+                    style={[styles.slot, on && { backgroundColor: colors.dark, borderColor: colors.dark }]}>
+                    <Txt w="bold" size={14} color={on ? '#FFFFFF' : colors.text}>{s}</Txt>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          )}
+        </Card>
 
         <View style={styles.club}>
           <View style={[styles.clubDot, stamps === 0 && styles.clubDotOff]}>{stamps > 0 && <Icon name="check" size={16} color={colors.dark} strokeWidth={3} />}</View>
