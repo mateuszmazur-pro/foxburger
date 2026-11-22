@@ -15,6 +15,7 @@ import { tenant } from '../../tenant';
 import { colors } from '../../theme';
 
 const FADE = 36;
+const FADE_STEPS = [45, 30, 18, 8];
 
 export default function MenuScreen() {
   const insets = useSafeAreaInsets();
@@ -65,15 +66,22 @@ export default function MenuScreen() {
         </View>
       </View>
 
-      <Svg pointerEvents="none" width="100%" height={FADE} style={[styles.fade, { top: headerH }]}>
-        <Defs>
-          <LinearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor={colors.bg} stopOpacity={0.85} />
-            <Stop offset="1" stopColor={colors.bg} stopOpacity={0} />
-          </LinearGradient>
-        </Defs>
-        <Rect width="100%" height={FADE} fill="url(#fade)" />
-      </Svg>
+      {/* Pas pod belką: rozmycie słabnie schodkami w dół (jak w projekcie), na wierzchu delikatny gradient tła. */}
+      <View pointerEvents="none" style={[styles.fade, { top: headerH, height: FADE }]}>
+        {FADE_STEPS.map((intensity, i) => (
+          <BlurView key={i} blurTarget={target} blurMethod="dimezisBlurViewSdk31Plus" intensity={intensity} tint="light"
+            style={{ position: 'absolute', left: 0, right: 0, top: (i * FADE) / FADE_STEPS.length, height: FADE / FADE_STEPS.length }} />
+        ))}
+        <Svg width="100%" height={FADE} style={StyleSheet.absoluteFill}>
+          <Defs>
+            <LinearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+              <Stop offset="0" stopColor={colors.bg} stopOpacity={0.4} />
+              <Stop offset="1" stopColor={colors.bg} stopOpacity={0} />
+            </LinearGradient>
+          </Defs>
+          <Rect width="100%" height={FADE} fill="url(#fade)" />
+        </Svg>
+      </View>
 
       <CartBar />
       <LocationPicker visible={picking} onClose={() => setPicking(false)} />
