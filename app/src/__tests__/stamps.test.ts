@@ -31,3 +31,17 @@ test('podpis z przecinkiem i poprawną odmianą', () => {
   expect(stampsLabel(12)).toBe('12 pieczątek');
   expect(stampsLabel(22)).toBe('22 pieczątki');
 });
+
+import { stampSlots } from '../loyalty/stamps';
+
+describe('stampSlots', () => {
+  it('7,5 z 10: 7 pełnych, pół, puste, nagroda na końcu', () => {
+    expect(stampSlots(7.5, 10)).toEqual(['full', 'full', 'full', 'full', 'full', 'full', 'full', 'half', 'empty', 'reward']);
+  });
+  it('0 z 4: puste i nagroda', () => {
+    expect(stampSlots(0, 4)).toEqual(['empty', 'empty', 'empty', 'reward']);
+  });
+  it('9,5 z 10: 9 pełnych i pole nagrody', () => {
+    expect(stampSlots(9.5, 10).slice(-2)).toEqual(['full', 'reward']);
+  });
+});

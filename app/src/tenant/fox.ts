@@ -71,6 +71,11 @@ export const fox: Tenant = {
     { id: 'burger-tygodnia', label: 'BURGER TYGODNIA', title: 'Fox Farmer', description: '100% wołowiny, bekon, ser, jajo sadzone i sos firmowy.', image: burgerImg, priceLabel: 'Cena', price: 3900, cta: 'Zamów', productId: 'fox-farmer' },
     { id: 'promocja', label: 'PROMOCJA', title: 'Zestaw z frytkami', description: 'Burger, duże frytki belgijskie i napój w lepszej cenie.', image: burgerImg, priceLabel: 'Cena zestawu', cta: 'Zamów', productId: 'fox-farmer' },
   ],
-  loyalty: { stampsToReward: 10, demoStamps: 7, zlPerHalfStamp: 50, clubName: 'Fox Club' },
+  loyalty: { stampsToReward: 10, demoStamps: 7.5, zlPerHalfStamp: 50, clubName: 'Fox Club' },
   demoCustomer: { id: 'demo-mateusz', firstName: 'Mateusz' },
+  // PRZYKŁADOWE — do potwierdzenia z Foxem
+  promos: [
+    { id: 'zestaw-10', kind: 'coupon', title: 'Zestaw z frytkami', description: 'Do każdego burgera duże frytki i napój.', value: '−10', valueNote: 'zł do zestawu', terms: 'Ważny do 30.11 · raz na konto' },
+    { id: 'wtorek-x2', kind: 'club', title: 'Podwójne pieczątki', description: 'W każdy wtorek za zamówienie w aplikacji.', value: '×2', valueNote: 'pieczątki', terms: 'Każdy wtorek · zamówienia w aplikacji' },
+  ],
 };

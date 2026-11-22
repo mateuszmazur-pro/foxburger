@@ -1,10 +1,12 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StampIcon } from '../../components/StampIcon';
 import { useTabBarSpace } from '../../components/TabBar';
 import { Txt } from '../../components/Txt';
 import { useNow } from '../../hooks';
 import { loyaltyCode, secondsToRefresh } from '../../loyalty/code';
+import { stampSlots } from '../../loyalty/stamps';
 import { tenant } from '../../tenant';
 import { colors, shadow } from '../../theme';
 
@@ -35,14 +37,14 @@ export default function CodeScreen() {
       <View style={styles.stamps}>
         <View style={styles.between}>
           <Txt w="extrabold" size={13} color={colors.navActive} style={{ letterSpacing: 1.8 }}>TWOJE PIECZĄTKI</Txt>
-          <Txt w="extrabold" size={13} color="#FFFFFF">{demoStamps}/{stampsToReward}</Txt>
+          <Txt w="extrabold" size={13} color="#FFFFFF">{String(demoStamps).replace('.', ',')}/{stampsToReward}</Txt>
         </View>
         <View style={styles.between}>
-          {Array.from({ length: stampsToReward }, (_, i) => (
-            <View key={i} style={[styles.stamp, i < demoStamps ? { backgroundColor: colors.stampOn } : styles.stampOff]} />
+          {stampSlots(demoStamps, stampsToReward).map((slot, i) => (
+            <StampIcon key={i} slot={slot} size={28} />
           ))}
         </View>
-        <Txt size={12} color="#D6D3D1">Jeszcze {stampsToReward - demoStamps} do darmowego burgera</Txt>
+        <Txt size={12} color="#D6D3D1">Jeszcze {String(stampsToReward - demoStamps).replace('.', ',')} do darmowego burgera</Txt>
       </View>
     </ScrollView>
   );
@@ -55,6 +57,4 @@ const styles = StyleSheet.create({
   fill: { height: 6, backgroundColor: colors.brand },
   stamps: { backgroundColor: colors.dark, borderRadius: 22, padding: 16, gap: 12 },
   between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  stamp: { width: 22, height: 22, borderRadius: 11 },
-  stampOff: { borderWidth: 2, borderColor: '#57534E' },
 });

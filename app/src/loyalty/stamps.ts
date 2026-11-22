@@ -19,3 +19,15 @@ export function stampsLabel(stamps: number): string {
   const dd = stamps % 100;
   return `${num} ${d >= 2 && d <= 4 && (dd < 12 || dd > 14) ? 'pieczątki' : 'pieczątek'}`;
 }
+
+export type StampSlot = 'full' | 'half' | 'empty' | 'reward';
+
+/** Pola karty pieczątek; ostatnie pole to zawsze nagroda (darmowy burger). */
+export function stampSlots(stamps: number, total: number): StampSlot[] {
+  return Array.from({ length: total }, (_, i): StampSlot => {
+    if (i === total - 1) return 'reward';
+    if (stamps >= i + 1) return 'full';
+    if (stamps > i) return 'half';
+    return 'empty';
+  });
+}

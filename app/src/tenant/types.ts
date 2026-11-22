@@ -70,4 +70,16 @@ export type Tenant = {
   banner: BannerSlide[];
   loyalty: { stampsToReward: number; demoStamps: number; /** co ile zł pół pieczątki za zamówienie */ zlPerHalfStamp: number; clubName: string };
   demoCustomer: { id: string; firstName: string };
+  promos: Promo[];
+};
+
+export type Promo = {
+  id: string;
+  /** coupon – trzeba aktywować; club – stały bonus Fox Club, aktywny od razu */
+  kind: 'coupon' | 'club';
+  title: string;
+  description: string;
+  value: string;
+  valueNote: string;
+  terms: string;
 };
