@@ -70,7 +70,7 @@ export default function CartScreen() {
             const extras = [
               ...p.addons.filter((a) => l.addonIds.includes(a.id)).map((a) => a.name),
               ...(l.asSet ? ['Zestaw'] : []),
-              ...(l.note ? [`Uwagi: ${l.note}`] : []),
+              ...(l.note ? [l.note] : []),
             ].join(' · ');
             return (
               <View key={l.key} style={styles.line}>

@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { ComponentRef, useEffect, useRef, useState } from 'react';
+import { Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCart } from '../../cart/CartContext';
 import { unitPrice } from '../../cart/cart';
@@ -27,12 +27,25 @@ export default function ProductScreen() {
   if (!product) {
     return <EmptyState title="Nie znaleziono produktu" text="Ta pozycja nie jest już dostępna w menu." action="Wróć do menu" onAction={() => router.dismissTo('/menu')} />;
   }
+  const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
+  const [kb, setKb] = useState(false);
+  useEffect(() => {
+    const show = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', () => setKb(true));
+    const hide = Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', () => setKb(false));
+    return () => { show.remove(); hide.remove(); };
+  }, []);
+  // Gdy klawiatura się pojawi przy polu uwag, przewiń tak, by pole było widać nad klawiaturą.
+  useEffect(() => {
+    if (!kb) return;
+    const t = setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 120);
+    return () => clearTimeout(t);
+  }, [kb]);
   const toggle = (aid: string) => setAddonIds((s) => (s.includes(aid) ? s.filter((x) => x !== aid) : [...s, aid]));
   const sum = unitPrice({ productId: product.id, addonIds, asSet }, tenant.products) * qty;
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 140 }} keyboardShouldPersistTaps="handled">
+      <ScrollView ref={scroll} contentContainerStyle={{ paddingBottom: kb ? 24 : 140 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive">
         <View style={{ paddingTop: insets.top + 8 }}>
           <Image source={product.image} resizeMode="contain" style={styles.img} accessibilityLabel={product.name} />
           <View style={[styles.topBtns, { top: insets.top + 8 }]}>
@@ -83,12 +96,12 @@ export default function ProductScreen() {
           </View>
         </View>
       </ScrollView>
-      <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 16) + 8 }]}>
+      {!kb && <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 16) + 8 }]}>
         <QtyStepper qty={qty} size="lg" tone="muted" label={product.name} onInc={() => setQty((q) => q + 1)} onDec={() => setQty((q) => Math.max(1, q - 1))} />
         <Pressable accessibilityRole="button" onPress={() => { add({ productId: product.id, addonIds, asSet, note, qty }); router.back(); }} style={styles.addBtn}>
           <Txt w="bold" size={15} color="#FFFFFF">Dodaj · {formatPLN(sum)}</Txt>
         </Pressable>
-      </View>
+      </View>}
     </KeyboardAvoidingView>
   );
 }
