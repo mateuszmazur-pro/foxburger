@@ -7,7 +7,7 @@ import { colors } from '../theme';
 import { Txt } from './Txt';
 
 const EMPTY = '#57534E';
-const ICON_OFF = '#44403C';
+const ICON_OFF = '#78716C';
 const ICON_REWARD = '#78716C';
 const ICON_W = 1071.16;
 
