@@ -17,6 +17,9 @@ const SETTINGS = [
   { icon: '📄', title: 'Regulamin i prywatność' },
 ];
 
+const rows = <T,>(items: T[], n: number): T[][] =>
+  Array.from({ length: Math.ceil(items.length / n) }, (_, i) => items.slice(i * n, i * n + n));
+
 const soon = () => Alert.alert('Wkrótce', 'Ta opcja pojawi się w kolejnej wersji aplikacji.');
 
 export default function AccountScreen() {
@@ -48,8 +51,10 @@ export default function AccountScreen() {
           </View>
         </View>
         <View style={styles.grid} accessible accessibilityLabel={`${stampsLabel(demoStamps)} z ${stampsToReward}`}>
-          {stampSlots(demoStamps, stampsToReward).map((slot, i) => (
-            <StampIcon key={i} slot={slot} size={44} />
+          {rows(stampSlots(demoStamps, stampsToReward), 5).map((row, r) => (
+            <View key={r} style={styles.gridRow}>
+              {row.map((slot, i) => <StampIcon key={i} slot={slot} size={44} />)}
+            </View>
           ))}
         </View>
         <View style={[styles.row, { marginTop: 18, gap: 10 }]}>
@@ -84,7 +89,8 @@ export default function AccountScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   row: { flexDirection: 'row', alignItems: 'center' },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: 12, marginTop: 18 },
+  grid: { gap: 12, marginTop: 18 },
+  gridRow: { flexDirection: 'row', justifyContent: 'space-between' },
   btn: { flex: 1, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   btnOutline: { borderWidth: 1.5, borderColor: '#57534E' },
   setting: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13, borderBottomWidth: 1, borderBottomColor: '#EFE6DF' },
